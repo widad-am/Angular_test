@@ -1,0 +1,29 @@
+<div class="product-list-container">
+  <div class="controls">
+    <mat-form-field appearance="outline">
+      <mat-label>Search products</mat-label>
+      <input matInput [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange()" placeholder="Type to search...">
+    </mat-form-field>
+
+    <mat-button-toggle-group [(ngModel)]="sortOrder" (change)="onSortChange()">
+      <mat-button-toggle value="asc">A-Z</mat-button-toggle>
+      <mat-button-toggle value="desc">Z-A</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+
+  <div *ngIf="loading" class="loading-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <mat-grid-list cols="4" rowHeight="350px" gutterSize="16px" *ngIf="!loading">
+    <mat-grid-tile *ngFor="let product of filteredProducts">
+      <mat-card class="product-card">
+        <img mat-card-image [src]="product.image" [alt]="product.title" title="Product Image">
+        <mat-card-content>
+          <h2 mat-card-title>{{ product.title }}</h2>
+          <p class="price">{{ product.price | currency }}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
